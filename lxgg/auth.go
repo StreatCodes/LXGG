@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"net/http"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -15,6 +15,7 @@ func validateJWT(h http.Handler) http.Handler {
 			return
 		}
 
+		//TODO make a new type for this so it doesn't have all the JWT junk in it down the line
 		var user User
 		token, err := jwt.ParseWithClaims(cookie.Value, &user, func(token *jwt.Token) (interface{}, error) {
 			return []byte("8asdnSJ871SKJN8*6asdj 12n3k12j3n9as87cha89&"), nil
@@ -31,9 +32,8 @@ func validateJWT(h http.Handler) http.Handler {
 			return
 		}
 
-		fmt.Printf("%v %v %v", user.User, user.Admin, user.StandardClaims.ExpiresAt)
-
-		h.ServeHTTP(w, r)
+		ctx := context.WithValue(r.Context(), UserKey("user"), user)
+		h.ServeHTTP(w, r.WithContext(ctx))
 	}
 
 	return http.HandlerFunc(fn)

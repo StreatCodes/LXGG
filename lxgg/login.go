@@ -8,6 +8,9 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
+//UserKey is our type for passing the user context between middlewares
+type UserKey string
+
 //User contains user information
 type User struct {
 	User  string
@@ -29,7 +32,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		//Create our JWT
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 			"User":  loginReq.Username,
-			"Admin": true,
+			"Admin": false,
 		})
 
 		// Sign and get the complete encoded token as a string using the secret
