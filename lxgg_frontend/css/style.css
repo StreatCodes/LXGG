@@ -1,0 +1,57 @@
+body {
+    font-family: 'Questrial', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+/* SIDEBAR */
+sidebar{
+    background-color: #232323;
+    color: #ccc;
+    width: 80px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+sidebar>a.box {
+    padding: 28px;
+    align-self: center;
+}
+
+sidebar>a.box::after {
+    content: url(/icons/box.svg);
+}
+
+sidebar>a.user {
+    padding: 28px;
+    align-self: center;
+    margin-top: auto;
+}
+
+sidebar>a.user::after {
+    content: url(/icons/box.svg);
+}
+
+sidebar>a:hover {
+    border-right: solid 3px rgb(251, 167, 108);
+    padding-right: 25px;
+    cursor: pointer;
+}
+
+sidebar>a.active {
+    border-right: solid 3px rgb(245, 124, 39);
+    padding-right: 25px;
+    cursor: default;
+}
+
+main {
+    margin: 20px 20px 20px 100px;
+}
+
+footer {
+
+}
