@@ -18,13 +18,59 @@ sidebar{
     flex-direction: column;
 }
 
-sidebar>a.box {
+sidebar>a.new {
     padding: 28px;
     align-self: center;
 }
 
-sidebar>a.box::after {
+sidebar>a.new::after {
+    content: url(/icons/plus-square.svg);
+}
+
+sidebar>a.containers {
+    padding: 28px;
+    align-self: center;
+}
+
+sidebar>a.containers::after {
     content: url(/icons/box.svg);
+}
+
+sidebar>a.images {
+    padding: 28px;
+    align-self: center;
+}
+
+sidebar>a.images::after {
+    content: url(/icons/layers.svg);
+}
+
+
+sidebar>a.networking {
+    padding: 28px;
+    align-self: center;
+}
+
+sidebar>a.networking::after {
+    content: url(/icons/activity.svg);
+}
+
+sidebar>a.host {
+    padding: 28px;
+    align-self: center;
+}
+
+sidebar>a.host::after {
+    content: url(/icons/server.svg);
+}
+
+sidebar>a.settings {
+    padding: 28px;
+    align-self: center;
+}
+
+sidebar>a.settings::after {
+    content: url(/icons/settings.svg);
 }
 
 sidebar>a.user {
