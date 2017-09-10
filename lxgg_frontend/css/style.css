@@ -5,8 +5,28 @@ body {
     background-color: #f5f5f5;
 }
 
+/* TRANSITIONS */
+.fade-enter-active{
+    transition: opacity .2s, transform .2s;
+    transition-delay: .2s;
+
+}
+.fade-leave-active {
+    transition: opacity .2s;
+}
+
+.fade-enter {
+    transform: translateY(10px);
+    opacity: 0;
+}
+.fade-leave-to
+{
+    opacity: 0
+}
+
+
 /* SIDEBAR */
-sidebar{
+div.sidebar{
     background-color: #232323;
     color: #ccc;
     width: 80px;
@@ -18,77 +38,77 @@ sidebar{
     flex-direction: column;
 }
 
-sidebar>a.new {
+div.sidebar>a.new {
     padding: 28px;
     align-self: center;
 }
 
-sidebar>a.new::after {
+div.sidebar>a.new::after {
     content: url(/icons/plus-square.svg);
 }
 
-sidebar>a.containers {
+div.sidebar>a.containers {
     padding: 28px;
     align-self: center;
 }
 
-sidebar>a.containers::after {
+div.sidebar>a.containers::after {
     content: url(/icons/box.svg);
 }
 
-sidebar>a.images {
+div.sidebar>a.images {
     padding: 28px;
     align-self: center;
 }
 
-sidebar>a.images::after {
+div.sidebar>a.images::after {
     content: url(/icons/layers.svg);
 }
 
 
-sidebar>a.networking {
+div.sidebar>a.networking {
     padding: 28px;
     align-self: center;
 }
 
-sidebar>a.networking::after {
+div.sidebar>a.networking::after {
     content: url(/icons/activity.svg);
 }
 
-sidebar>a.host {
+div.sidebar>a.host {
     padding: 28px;
     align-self: center;
 }
 
-sidebar>a.host::after {
+div.sidebar>a.host::after {
     content: url(/icons/server.svg);
 }
 
-sidebar>a.settings {
+div.sidebar>a.settings {
     padding: 28px;
     align-self: center;
 }
 
-sidebar>a.settings::after {
+div.sidebar>a.settings::after {
     content: url(/icons/settings.svg);
 }
 
-sidebar>a.user {
+div.sidebar>a.user {
     padding: 28px;
     align-self: center;
     margin-top: auto;
 }
 
-sidebar>a.user::after {
+div.sidebar>a.user::after {
     content: url(/icons/user.svg);
 }
 
-sidebar>a:hover {
+div.sidebar>a:hover {
     cursor: pointer;
     background-color: #383838;
 }
 
-sidebar>a.active {
+div.sidebar>a.active {
     border-right: solid 3px rgb(245, 124, 39);
     padding-right: 25px;
     cursor: default;
