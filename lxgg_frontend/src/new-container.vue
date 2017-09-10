@@ -1,6 +1,8 @@
 <template>
     <main>
-        new container
+        <div class="panel">
+            new container
+        </div>
     </main>
 </template>
 

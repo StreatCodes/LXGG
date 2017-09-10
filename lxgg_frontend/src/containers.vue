@@ -4,6 +4,7 @@
             <input type="text" placeholder="Filter Containers">
         </div>
         <div class="panel">
+            {{$route.name}}
             Data
         </div>
     </main>

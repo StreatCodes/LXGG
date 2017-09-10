@@ -4,9 +4,8 @@ import Container from './containers.vue'
 
 
 const routes = [
-	{ path: '/new', component: NewContainer},
-	{ path: '/', component: Container},
-	{ path: '/containers', component: Container},
+	{ path: '/new', name: 'new', component: NewContainer},
+	{ path: '/', alias: '/containers', name: 'containers', component: Container},
 ];
 
 const router = new VueRouter({ routes });
