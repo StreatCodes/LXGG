@@ -1,4 +1,5 @@
 import Main from './main.vue'
+import Login from './login.vue'
 import NewContainer from './new-container.vue'
 import Container from './containers.vue'
 import Images from './images.vue'
@@ -7,15 +8,24 @@ import Host from './host.vue'
 import Settings from './settings.vue'
 import User from './user.vue'
 
+const checkLoggedIn = (to, from, next) => {
+	//redirect to login if no cookie found
+	if(document.cookie.indexOf('lxgg_session=') == -1) {
+		next('/login');
+	} else {
+		next();
+	}
+}
 
 const routes = [
-	{ path: '/new', name: 'new', component: NewContainer},
-	{ path: '/', alias: '/containers', name: 'containers', component: Container},
-	{ path: '/images', name: 'images', component: Images},
-	{ path: '/networking', name: 'networking', component: Network},
-	{ path: '/host', name: 'host', component: Host},
-	{ path: '/settings', name: 'settings', component: Settings},
-	{ path: '/user', name: 'user', component: User},
+	{ path: '/login', name: 'login', component: Login},
+	{ path: '/new', name: 'new', component: NewContainer, beforeEnter: checkLoggedIn},
+	{ path: '/', alias: '/containers', name: 'containers', component: Container, beforeEnter: checkLoggedIn},
+	{ path: '/images', name: 'images', component: Images, beforeEnter: checkLoggedIn},
+	{ path: '/networking', name: 'networking', component: Network, beforeEnter: checkLoggedIn},
+	{ path: '/host', name: 'host', component: Host, beforeEnter: checkLoggedIn},
+	{ path: '/settings', name: 'settings', component: Settings, beforeEnter: checkLoggedIn},
+	{ path: '/user', name: 'user', component: User, beforeEnter: checkLoggedIn},
 ];
 
 const router = new VueRouter({ routes });

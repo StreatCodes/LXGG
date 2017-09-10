@@ -9,9 +9,9 @@ import (
 
 func validateJWT(h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
-		cookie, err := r.Cookie("session")
+		cookie, err := r.Cookie("lxgg_session")
 		if err != nil {
-			http.Error(w, "Can't read session cookie, have you logged in?", http.StatusForbidden)
+			http.Error(w, "Can't read lxgg_session cookie, have you logged in?", http.StatusForbidden)
 			return
 		}
 
