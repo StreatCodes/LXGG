@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -32,7 +33,8 @@ func main() {
 	filesDir := filepath.Join(workDir, "/static")
 	staticServer(r, "/", http.Dir(filesDir))
 
-	http.ListenAndServe(settings.Host+":"+settings.Port, r)
+	err := http.ListenAndServe(settings.Host+":"+settings.Port, r)
+	log.Fatal("Error starting server: ", err)
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
