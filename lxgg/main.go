@@ -11,6 +11,8 @@ import (
 )
 
 func main() {
+	settings := loadSettings()
+
 	r := chi.NewRouter()
 
 	// r.Get("/", rootHandler)
@@ -30,7 +32,7 @@ func main() {
 	filesDir := filepath.Join(workDir, "/static")
 	staticServer(r, "/", http.Dir(filesDir))
 
-	http.ListenAndServe(":3001", r)
+	http.ListenAndServe(settings.Host+":"+settings.Port, r)
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
