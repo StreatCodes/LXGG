@@ -38,7 +38,7 @@ func generateSettings() {
 	}
 
 	enc := json.NewEncoder(f)
-	err = enc.Encode(Settings{Host: "0.0.0.0", Port: "80"})
+	err = enc.Encode(Settings{Host: "0.0.0.0", Port: "3000"})
 	if err != nil {
 		log.Fatal("Could not encode json to settings.json: ", err)
 	}
