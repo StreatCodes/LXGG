@@ -86,9 +86,13 @@ func loadDB() *sqlx.DB {
 		fmt.Println("Generating default admin user:")
 		fmt.Printf("Username: %s\nPassword: %s\n", username, password)
 
-		bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+		hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+		//TODO rm db
+		if err != nil {
+			log.Fatal("Could not generate from hash: ", err)
+		}
 
-		_, err = db.Exec(`INSERT INTO users (Username, Password, Admin) VALUES (?, ?, ?)`, username, password, true)
+		_, err = db.Exec(`INSERT INTO users (username, password, admin) VALUES (?, ?, ?)`, username, string(hash), true)
 
 		//TODO delete DB here, and the other place
 		if err != nil {
@@ -102,7 +106,8 @@ func loadDB() *sqlx.DB {
 func generateRandomPW() string {
 	bytes := make([]byte, 10)
 	_, err := rand.Read(bytes)
-	// Note that err == nil only if we read len(b) bytes.
+
+	//TODO del DB
 	if err != nil {
 		log.Fatal("Error generating random password, delete lxgg.db and try again: ", err)
 	}
