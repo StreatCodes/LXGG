@@ -9,10 +9,15 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/jmoiron/sqlx"
 )
+
+//LXGGDB Global DB var
+var LXGGDB *sqlx.DB
 
 func main() {
 	settings := loadSettings()
+	LXGGDB = loadDB()
 
 	r := chi.NewRouter()
 
@@ -33,12 +38,13 @@ func main() {
 	filesDir := filepath.Join(workDir, "/static")
 	staticServer(r, "/", http.Dir(filesDir))
 
-	err := http.ListenAndServe(settings.Host+":"+settings.Port, r)
+	fmt.Println("Starting server ", settings.serverAddr())
+	err := http.ListenAndServe(settings.serverAddr(), r)
 	log.Fatal("Error starting server: ", err)
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("<html><body>Welcome to the LXGG api, hit up <a href=\"https://github.com/streatcodes/lxgg\">our github page for docs!</a></body></html>"))
+	w.Write([]byte("Welcome to the LXGG api, hit up https://github.com/streatcodes/lxgg for some docs!"))
 }
 
 func staticServer(r chi.Router, path string, root http.FileSystem) {

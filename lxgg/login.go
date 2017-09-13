@@ -14,6 +14,7 @@ type UserKey string
 //User contains user information
 type User struct {
 	User  string
+	Pass  string `json:"-"`
 	Admin bool
 	jwt.StandardClaims
 }

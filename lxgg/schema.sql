@@ -1,0 +1,20 @@
+CREATE TABLE users(
+	ID			INTEGER PRIMARY KEY,
+	Username	TEXT,
+	Password	TEXT,
+	Admin		INTEGER
+);
+
+CREATE TABLE folders(
+	ID			INTEGER PRIMARY KEY,
+	Name		TEXT
+);
+
+CREATE TABLE containers(
+	ID			INTEGER PRIMARY KEY,
+	Owner		INTEGER,
+	Folder		INTEGER,
+	Name		TEXT,
+	FOREIGN KEY(Owner) REFERENCES users(ID),
+	FOREIGN KEY(Folder) REFERENCES folders(ID)
+);
