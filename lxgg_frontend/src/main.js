@@ -1,12 +1,16 @@
-import Main from './main.vue'
-import Login from './login.vue'
-import NewContainer from './new-container.vue'
-import Container from './containers.vue'
-import Images from './images.vue'
-import Network from './network.vue'
-import Host from './host.vue'
-import Settings from './settings.vue'
-import User from './user.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Main from './main.vue';
+import Login from './login.vue';
+import NewContainer from './new-container.vue';
+import Container from './containers.vue';
+import Images from './images.vue';
+import Network from './network.vue';
+import Host from './host.vue';
+import Settings from './settings.vue';
+import User from './user.vue';
+
+Vue.use(VueRouter);
 
 const checkLoggedIn = (to, from, next) => {
 	//redirect to login if no cookie found

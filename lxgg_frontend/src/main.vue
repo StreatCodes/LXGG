@@ -11,7 +11,7 @@
 <script>
 import SideBar from './sidebar.vue'
 
-module.exports = {
+export default {
     props: {
     },
     components: {
