@@ -32,6 +32,7 @@ func main() {
 		r.Use(validateJWT)
 
 		r.Get("/containers", containersAllHandler)
+		r.Post("/containers/new", newContainerHandler)
 	})
 
 	workDir, _ := os.Getwd()

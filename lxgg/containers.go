@@ -42,3 +42,7 @@ func containersAllHandler(w http.ResponseWriter, r *http.Request) {
 	// 	w.Write([]byte("Fetching USER container list..."))
 	// }
 }
+
+func newContainerHandler(w http.ResponseWriter, r *http.Request) {
+
+}
