@@ -45,6 +45,7 @@ select {
     font-size: 20px;
     box-sizing: border-box;
     outline: none;
+	background-color: inherit;
 }
 
 select:focus {
@@ -139,6 +140,7 @@ div.sidebar.hidebar {
 div.sidebar>a{
     padding: 28px;
     align-self: center;
+	outline: none;
 }
 
 div.sidebar>a.new::after {

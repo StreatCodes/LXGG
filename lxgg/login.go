@@ -2,10 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"golang.org/x/crypto/bcrypt"
 )
 
 //UserKey is our type for passing the user context between middlewares
@@ -13,8 +16,10 @@ type UserKey string
 
 //User contains user information
 type User struct {
-	User  string
-	Admin bool
+	ID    int64  `db:"id"`
+	User  string `db:"username"`
+	Pass  string `db:"password" json:"-"`
+	Admin bool   `db:"admin"`
 	jwt.StandardClaims
 }
 
@@ -28,7 +33,14 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	var loginReq loginRequest
 	dec.Decode(&loginReq)
 
-	if loginReq.Username == "lxgg" && loginReq.Password == "password" {
+	authorized, err := verifyLogin(w, loginReq.Username, loginReq.Password)
+	if err != nil {
+		http.Error(w, "Error verifying user", http.StatusInternalServerError)
+		log.Println("Error verifying user: ", err)
+		return
+	}
+
+	if authorized {
 		//Create our JWT
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 			"User":  loginReq.Username,
@@ -50,4 +62,25 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, "Invalid creds", http.StatusUnauthorized)
 	}
+}
+
+func verifyLogin(w http.ResponseWriter, username, password string) (bool, error) {
+	var user []User
+
+	//TODO make sure this isn't nil when empty
+	err := LXGGDB.Select(&user, `SELECT * FROM users WHERE username=$1`, username)
+	if err != nil {
+		return false, err
+	}
+
+	if len(user) < 1 {
+		return false, errors.New("No users associated with that username")
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user[0].Pass), []byte(password))
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
