@@ -6,17 +6,15 @@
                 <div class="grid">
                     <div>
                         <label>Container Name</label>
-                        <input type="text" v-model="name">
+                        <input type="text" v-model="name" placeholder="Bernard Web">
                     </div>
                     <div>
-                        <label>Folder</label>
-                        <select v-model="folder">
-                            <option :value="option.Value" :key="index" v-for="(option, index) in folders">{{option.Name}}</option>
-                        </select>
+                        <label>Tags (Seperated by a comma)</label>
+                        <input type="text" v-model="tags" placeholder="monitoring, amazing, state of the art">
                     </div>
                     <div class="new-row">
                         <label>IPV4 Address</label>
-                        <input type="text" v-model="ip">
+                        <input type="text" v-model="ip" placeholder="192.168.10.69">
                     </div>
                     <div class="new-row">
                         <button :class="{loading: loading}" @click="createContainer"><span>Deploy Container!</span></button>
@@ -34,15 +32,9 @@ export default {
     data: function(){
         return {
             name: "",
-            folder: "",
+            tags: "",
             ip: "",
 
-            folders: [
-                {Name: "Folder One", Value: "1"},
-                {Name: "Folder 2", Value: "2"},
-                {Name: "Folder Three", Value: "3"},
-                {Name: "Folder 4", Value: "4"},
-            ],
             loading: false
         }
     },
@@ -57,7 +49,7 @@ export default {
                 ip: this.ip
             };
 
-            fetch("/api/newcontainer",
+            fetch("/api/containers/new",
             {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},

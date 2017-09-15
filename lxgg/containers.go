@@ -44,5 +44,13 @@ func containersAllHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func newContainerHandler(w http.ResponseWriter, r *http.Request) {
+	var container Container
 
+	dec := json.NewDecoder(r.Body)
+	err := dec.Decode(container)
+
+	if err != nil {
+		http.Error(w, err, http.StatusInternalServerError)
+		return
+	}
 }

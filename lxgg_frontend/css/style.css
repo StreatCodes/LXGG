@@ -29,8 +29,8 @@ input[type="text"], input[type="password"]{
     margin-bottom: 20px;
 }
 
-input[type="text"]::-webkit-input-placeholder,
-input[type="password"]::-webkit-input-placeholder {
+input::-webkit-input-placeholder,
+input::placeholder {
     color: #bdbdbd;
 }
 
