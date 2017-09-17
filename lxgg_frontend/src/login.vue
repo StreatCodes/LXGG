@@ -39,11 +39,12 @@ export default {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(payload)
             }).then((res) => {
-                console.log(res);
                 if(res.status == 200){
                     this.$router.push('/containers');
                 }else {
-                    console.log(res.body);
+                    //TODO show login error
+                    this.loading = false;
+                    console.log(res);
                 }
             });
         }

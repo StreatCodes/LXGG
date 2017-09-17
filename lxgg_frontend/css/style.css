@@ -7,19 +7,27 @@ body {
     font-size: 20px;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: normal;
     margin-top: 0;
     margin-bottom: 1rem;
 }
 
+
 /* INPUTS */
+
 label {
     margin-bottom: 10px;
     display: block;
 }
 
-input[type="text"], input[type="password"]{
+input[type="text"],
+input[type="password"] {
     width: 100%;
     border: 1px solid #e4e4e4;
     padding: 12px;
@@ -34,7 +42,8 @@ input::placeholder {
     color: #bdbdbd;
 }
 
-input[type="text"]:focus, input[type="password"]:focus {
+input[type="text"]:focus,
+input[type="password"]:focus {
     border-color: rgb(245, 124, 39);
 }
 
@@ -45,14 +54,15 @@ select {
     font-size: 20px;
     box-sizing: border-box;
     outline: none;
-	background-color: inherit;
+    background-color: inherit;
 }
 
 select:focus {
     border-color: rgb(245, 124, 39);
 }
 
-input[type="submit"], button {
+input[type="submit"],
+button {
     background-color: rgb(255, 105, 0);
     border: 0;
     padding: 12px 40px;
@@ -64,7 +74,8 @@ input[type="submit"], button {
     position: relative;
 }
 
-input[type="submit"]:hover, button:hover {
+input[type="submit"]:hover,
+button:hover {
     background-color: #ff7c21;
     box-shadow: 1px 1px 1px 1px #bbb;
     cursor: pointer;
@@ -81,49 +92,58 @@ button.loading::before {
 }
 
 @keyframes spin {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 button.loading>span {
     opacity: 0;
 }
 
+
 /* TRANSITIONS */
-.fade-enter-active{
+
+.fade-enter-active {
     transition: opacity .2s, transform .2s;
     transition-delay: .2s;
-
 }
+
 .fade-leave-active {
     transition: opacity .2s;
 }
 
 .fade-enter {
-    transform: translateY(10px);
+    transform: translateY(30px);
     opacity: 0;
 }
-.fade-leave-to
-{
+
+.fade-leave-to {
     opacity: 0
 }
 
+
 /* GRID */
+
 div.grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
 }
 
-div.grid > .new-row {
+div.grid>.new-row {
     grid-column: 1;
 }
 
+
 /* SIDEBAR */
-div.sidebar{
+
+div.sidebar {
     background-color: #232323;
     color: #ccc;
-    width: 80px;
     position: fixed;
     left: 0px;
     top: 0;
@@ -131,39 +151,60 @@ div.sidebar{
     display: flex;
     flex-direction: column;
     transition: left 200ms;
+    z-index: 1;
 }
 
 div.sidebar.hidebar {
     left: -80px;
 }
 
-div.sidebar>a{
-    padding: 28px;
+div.sidebar>a {
+    padding: 13px 28px 10px;
     align-self: center;
-	outline: none;
+    outline: none;
+    display: flex;
+    color: #ccc;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-div.sidebar>a.new::after {
+div.sidebar>a>span {
+    margin-top: 3px;
+    margin-right: auto;
+    max-width: 0px;
+    padding-left: 0px;
+    transition: 500ms max-width, 500ms padding-left;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+div.sidebar:hover>a>span {
+    max-width: 200px;
+    padding-left: 10px;
+}
+
+div.sidebar>a.new::before {
     content: url(/icons/plus-square.svg);
 }
 
-div.sidebar>a.containers::after {
+div.sidebar>a.containers::before {
     content: url(/icons/box.svg);
 }
 
-div.sidebar>a.images::after {
+div.sidebar>a.images::before {
     content: url(/icons/layers.svg);
 }
 
-div.sidebar>a.networking::after {
+div.sidebar>a.networking::before {
     content: url(/icons/activity.svg);
 }
 
-div.sidebar>a.host::after {
+div.sidebar>a.host::before {
     content: url(/icons/server.svg);
 }
 
-div.sidebar>a.settings::after {
+div.sidebar>a.settings::before {
     content: url(/icons/settings.svg);
 }
 
@@ -171,7 +212,7 @@ div.sidebar>a.user {
     margin-top: auto;
 }
 
-div.sidebar>a.user::after {
+div.sidebar>a.user::before {
     content: url(/icons/user.svg);
 }
 
@@ -188,7 +229,9 @@ div.sidebar>a.active {
 }
 
 /* MAIN */
+
 main {
+    transition: 300ms margin-left;
     margin: 20px 20px 20px 100px;
 }
 
@@ -198,13 +241,15 @@ div.panel {
     box-shadow: 1px 1px 1px 1px #f0f0f0;
 }
 
+
 /* LOGIN */
+
 div.login {
     width: 300px;
     margin: 200px auto;
 }
 
-/* FOOTER */
-footer {
 
-}
+/* FOOTER */
+
+footer {}
