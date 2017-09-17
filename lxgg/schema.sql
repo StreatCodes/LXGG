@@ -5,16 +5,11 @@ CREATE TABLE users(
 	admin		INTEGER
 );
 
-CREATE TABLE folders(
-	id			INTEGER PRIMARY KEY,
-	name		TEXT
-);
-
 CREATE TABLE containers(
 	id			INTEGER PRIMARY KEY,
-	owner		INTEGER,
-	folder		INTEGER,
+	owner_id	INTEGER,
 	name		TEXT,
-	FOREIGN KEY(owner) REFERENCES users(id),
-	FOREIGN KEY(folder) REFERENCES folders(id)
+	tags		TEXT,
+	ip			TEXT,
+	FOREIGN KEY(owner_id) REFERENCES users(id)
 );

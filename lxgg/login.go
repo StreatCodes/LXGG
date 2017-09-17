@@ -33,54 +33,52 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	var loginReq loginRequest
 	dec.Decode(&loginReq)
 
-	authorized, err := verifyLogin(w, loginReq.Username, loginReq.Password)
+	user, err := verifyLogin(w, loginReq.Username, loginReq.Password)
 	if err != nil {
 		http.Error(w, "Error verifying user", http.StatusInternalServerError)
 		log.Println("Error verifying user: ", err)
 		return
 	}
 
-	if authorized {
-		//Create our JWT
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-			"User":  loginReq.Username,
-			"Admin": false,
-		})
+	//Create our JWT
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"ID":    user.ID,
+		"User":  user.User,
+		"Admin": user.Admin,
+	})
 
-		// Sign and get the complete encoded token as a string using the secret
-		tokenString, err := token.SignedString([]byte("8asdnSJ871SKJN8*6asdj 12n3k12j3n9as87cha89&"))
-		if err != nil {
-			http.Error(w, fmt.Sprintf("Error signing JWT: %s", err), http.StatusInternalServerError)
-			return
-		}
-
-		//Create our cookie and send back a success login
-		cookie := http.Cookie{Name: "lxgg_session", Value: tokenString}
-		http.SetCookie(w, &cookie)
-
-		w.Write([]byte(`"Status":"Success"`))
-	} else {
-		http.Error(w, "Invalid creds", http.StatusUnauthorized)
+	// Sign and get the complete encoded token as a string using the secret
+	tokenString, err := token.SignedString([]byte("8asdnSJ871SKJN8*6asdj 12n3k12j3n9as87cha89&"))
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error signing JWT: %s", err), http.StatusInternalServerError)
+		return
 	}
+
+	//Create our cookie and send back a success login
+	cookie := http.Cookie{Name: "lxgg_session", Value: tokenString}
+	http.SetCookie(w, &cookie)
+
+	w.Write([]byte(`"Status":"Success"`))
+
 }
 
-func verifyLogin(w http.ResponseWriter, username, password string) (bool, error) {
+func verifyLogin(w http.ResponseWriter, username, password string) (User, error) {
 	var user []User
 
 	//TODO make sure this isn't nil when empty
 	err := LXGGDB.Select(&user, `SELECT * FROM users WHERE username=$1`, username)
 	if err != nil {
-		return false, err
+		return User{}, err
 	}
 
 	if len(user) < 1 {
-		return false, errors.New("No users associated with that username")
+		return User{}, errors.New("No users associated with that username")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user[0].Pass), []byte(password))
 	if err != nil {
-		return false, err
+		return User{}, err
 	}
 
-	return true, nil
+	return user[0], nil
 }

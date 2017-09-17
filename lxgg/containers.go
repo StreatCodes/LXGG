@@ -6,32 +6,25 @@ import "fmt"
 
 //Container stores all our container info
 type Container struct {
-	Name     string
-	Template string
-	CPUS     int
-	RAM      int
-	Disk     int
+	ID      int64  `db:"id"`
+	OwnerID int64  `db:"owner_id"`
+	Name    string `db:"name"`
+	Tags    string `db:"tags"`
+	IP      string `db:"ip"`
 }
 
 func containersAllHandler(w http.ResponseWriter, r *http.Request) {
 	// user := r.Context().Value(UserKey("user")).(User)
 
-	//TODO use sqlite
-	//TODO use SQLX to get user specif or all containers
-
-	containers := []Container{
-		Container{"Container 1", "Web", 1, 1024, 10240},
-		Container{"Container 2", "Web", 1, 1024, 10240},
-		Container{"Container 3", "IRC", 1, 512, 10240},
-		Container{"Container 4", "Mail", 2, 1024, 10240},
-		Container{"Container 5", "Mail", 2, 1024, 10240},
-		Container{"Container 6", "Mail", 2, 1024, 10240},
-		Container{"Container 7", "Monitoring", 1, 1024, 10240},
-		Container{"Container 8", "Monitoring", 1, 1024, 10240},
+	//TODO get params, check if all_users, then check user is admin, else owned containers
+	containers, err := getAllContainers()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error fetching containers from DB: %s", err), http.StatusInternalServerError)
+		return
 	}
 
 	enc := json.NewEncoder(w)
-	err := enc.Encode(containers)
+	err = enc.Encode(containers)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error encoding container response: %s", err), http.StatusInternalServerError)
 		return
@@ -47,10 +40,19 @@ func newContainerHandler(w http.ResponseWriter, r *http.Request) {
 	var container Container
 
 	dec := json.NewDecoder(r.Body)
-	err := dec.Decode(container)
+	err := dec.Decode(&container)
 
 	if err != nil {
-		http.Error(w, err, http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error decoding body: %s", err), http.StatusInternalServerError)
 		return
 	}
+
+	//TODO properly validate LXD fields, (though lXD might do that for us)
+	id, err := createContainer(container)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error creating container: %s", err), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintf(w, `{"Status": "Success", "ID":"%d"}`, id)
 }

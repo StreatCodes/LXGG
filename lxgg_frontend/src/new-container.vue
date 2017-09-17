@@ -45,7 +45,7 @@ export default {
 
             const payload = {
                 name: this.name,
-                folder: this.folder,
+                tags: this.tags,
                 ip: this.ip
             };
 
@@ -53,13 +53,14 @@ export default {
             {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
+				credentials: 'include',
                 body: JSON.stringify(payload)
             }).then((res) => {
                     console.log(this);
                 if(res.status == 200){
                     this.$router.push('/containers');
                 }else {
-                    console.log(res.body);
+                    console.log(res);
                 }
             });
         }
