@@ -167,21 +167,27 @@ div.sidebar>a {
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;
+    transition: 500ms padding 150ms;
 }
 
 div.sidebar>a>span {
-    margin-top: 3px;
+    margin-top: 7px;
     margin-right: auto;
-    max-width: 0px;
+    width: 0px;
     padding-left: 0px;
-    transition: 500ms max-width, 500ms padding-left;
+    transition: 500ms width 150ms, 500ms padding-left 150ms;
     overflow: hidden;
     white-space: nowrap;
+    font-size: 14px;
 }
 
 div.sidebar:hover>a>span {
-    max-width: 200px;
+    width: 140px;
     padding-left: 10px;
+}
+
+div.sidebar:hover>a {
+    padding: 13px 10px 10px;
 }
 
 div.sidebar>a.new::before {
@@ -228,10 +234,14 @@ div.sidebar>a.active {
     background-color: #2b2b2b;
 }
 
+div.sidebar:hover ~ main {
+    margin-left: 230px;
+}
+
 /* MAIN */
 
 main {
-    transition: 300ms margin-left;
+    transition: 500ms margin-left 150ms;
     margin: 20px 20px 20px 100px;
 }
 
@@ -241,6 +251,36 @@ div.panel {
     box-shadow: 1px 1px 1px 1px #f0f0f0;
 }
 
+/* CONTAINERS */
+
+.containers {
+    display: flex;
+}
+
+.containers>div {
+    flex: 50%;
+}
+
+.containers > .list {
+    
+}
+
+.containers > .list > .container:hover{
+    background-color: #D5EDFF;
+    cursor: pointer;
+}
+
+.containers > .list > .container.selected{
+    background-color: #3194e4;
+    color: white;
+}
+
+.containers > .container-board {
+    
+}
+.containers > .container-board.active {
+    border: 1px solid #3194e4;
+}
 
 /* LOGIN */
 

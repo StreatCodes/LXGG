@@ -6,8 +6,19 @@
         <div class="loading-panel" v-if="loading">
             Loading............
         </div>
-        <div class="panel" v-else>
-            {{filteredContainers()}}
+        <div class="containers" v-else>
+            <div class="list">
+                <div
+                    v-for="(container, index) in filteredContainers()"
+                    :class="['container', 'panel', {selected: selected == container}]"
+                    :key="container.id"
+                    @click="selectContainer(container)">
+                    {{container.Name}}
+                </div>
+            </div>
+            <div class="container-board":class="['panel', {active: selected !== null}]">
+
+            </div>
         </div>
     </main>
 </template>
@@ -22,7 +33,8 @@ export default {
     data: function(){
         return {
             loading: true,
-            containers: []
+            containers: [],
+            selected: null,
         }
     },
     methods: {
@@ -33,7 +45,7 @@ export default {
             .then((res) => {
                 if(res.status == 200){
                     return res.json();
-                }else {
+                } else {
                     throw new Error(res.body);
                 }
             })
@@ -50,6 +62,10 @@ export default {
         },
         filteredContainers: function() {
             return this.containers;
+        },
+        selectContainer: function(container) {
+            console.log("BOo")
+            this.selected = container;
         }
     }
 }
