@@ -1,23 +1,29 @@
 <template>
     <main>
-        <div class="search-bar">
-            <input type="text" placeholder="Filter Containers">
+        <div class="empty-containers" v-if="loading || containers == null">
+            <p>No containers found</p>
+            <router-link tag="button" to="/new">Create New Container</router-link>
         </div>
-        <div class="loading-panel" v-if="loading">
-            Loading............
-        </div>
-        <div class="containers" v-else>
-            <div class="list">
-                <div
-                    v-for="(container, index) in filteredContainers()"
-                    :class="['container', 'panel', {selected: selected == container}]"
-                    :key="container.id"
-                    @click="selectContainer(container)">
-                    {{container.Name}}
-                </div>
+        <div v-else>
+            <div class="search-bar">
+                <input type="text" placeholder="Filter Containers">
             </div>
-            <div class="container-board":class="['panel', {active: selected !== null}]">
+            <div class="loading-panel" v-if="loading">
+                Loading.............
+            </div>
+            <div class="containers" v-else>
+                <div class="list">
+                    <div
+                        v-for="(container, index) in filteredContainers()"
+                        :class="['container', 'panel', {selected: selected == container}]"
+                        :key="container.id"
+                        @click="selectContainer(container)">
+                        {{container.Name}}
+                    </div>
+                </div>
+                <div class="container-board":class="['panel', {active: selected !== null}]">
 
+                </div>
             </div>
         </div>
     </main>
@@ -50,14 +56,12 @@ export default {
                 }
             })
             .then((json) => {
-                console.log(json);
                 this.containers = json;
                 this.loading = false;
             })
             .catch((err) => {
                 //TODO show fetch error
                 this.loading = false;
-                console.log(err);
             });
         },
         filteredContainers: function() {

@@ -48,7 +48,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	// Sign and get the complete encoded token as a string using the secret
-	tokenString, err := token.SignedString([]byte("8asdnSJ871SKJN8*6asdj 12n3k12j3n9as87cha89&"))
+	tokenString, err := token.SignedString(JWTSECRET)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error signing JWT: %s", err), http.StatusInternalServerError)
 		return

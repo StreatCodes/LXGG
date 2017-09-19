@@ -15,6 +15,9 @@ import (
 //LXGGDB Global DB var
 var LXGGDB *sqlx.DB
 
+//JWTSECRET Global secret for jwt signing
+var JWTSECRET []byte
+
 func main() {
 	settings := loadSettings()
 	LXGGDB = loadDB()

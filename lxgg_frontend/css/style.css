@@ -282,6 +282,11 @@ div.panel {
     border: 1px solid #3194e4;
 }
 
+.empty-containers {
+    text-align: center;
+    margin-top: 60px;
+}
+
 /* LOGIN */
 
 div.login {

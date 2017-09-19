@@ -16,8 +16,9 @@ import (
 
 //Settings struct stores global server settings
 type Settings struct {
-	Host string
-	Port string
+	Host   string
+	Port   string
+	Secret string
 }
 
 func (s *Settings) serverAddr() string {
@@ -27,9 +28,9 @@ func (s *Settings) serverAddr() string {
 func loadSettings() Settings {
 	f, err := os.Open("settings.json")
 	if err != nil {
-		generateSettings()
+		settings := generateSettings()
 		fmt.Println("Could not load settings.json, default config generated.")
-		os.Exit(1)
+		return settings
 	}
 	dec := json.NewDecoder(f)
 
@@ -42,17 +43,21 @@ func loadSettings() Settings {
 	return settings
 }
 
-func generateSettings() {
+func generateSettings() Settings {
+	settings := Settings{Host: "0.0.0.0", Port: "3000", Secret: generateRandomString(60)}
+
 	f, err := os.Create("settings.json")
 	if err != nil {
 		log.Fatal("Could not create settings.json: ", err)
 	}
 
 	enc := json.NewEncoder(f)
-	err = enc.Encode(Settings{Host: "0.0.0.0", Port: "3000"})
+	err = enc.Encode(settings)
 	if err != nil {
 		log.Fatal("Could not encode json to settings.json: ", err)
 	}
+
+	return settings
 }
 
 func loadDB() *sqlx.DB {
@@ -81,7 +86,7 @@ func loadDB() *sqlx.DB {
 
 		//Generate default user
 		username := "lxgg"
-		password := generateRandomPW()
+		password := generateRandomString(10)
 
 		fmt.Println("Generating default admin user:")
 		fmt.Printf("Username: %s\nPassword: %s\n", username, password)
@@ -103,16 +108,16 @@ func loadDB() *sqlx.DB {
 	return db
 }
 
-func generateRandomPW() string {
-	bytes := make([]byte, 10)
+func generateRandomString(length int) string {
+	bytes := make([]byte, length)
 	_, err := rand.Read(bytes)
 
 	if err != nil {
 		deleteDBFile()
-		log.Fatal("Error generating random password, delete lxgg.db and try again: ", err)
+		log.Fatal("Error generating random string: ", err)
 	}
 
-	const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-"
+	const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-!@#$%^&*()_+=~`"
 
 	for i, b := range bytes {
 		bytes[i] = letters[b%byte(len(letters))]
