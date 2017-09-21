@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"net/http"
+	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
@@ -25,8 +26,8 @@ func validateJWT(h http.Handler) http.Handler {
 		if err != nil || !token.Valid {
 			//Delete cookie
 			//TODO make sure this is working
-			cookie.MaxAge = -1
-			http.SetCookie(w, cookie)
+			delCookie := http.Cookie{Path: "/", Name: "lxgg_session", Value: "", Expires: time.Now().Add(-100 * time.Hour)}
+			http.SetCookie(w, &delCookie)
 
 			http.Error(w, "Couldn't verify token integrity.", http.StatusForbidden)
 			return

@@ -55,7 +55,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Create our cookie and send back a success login
-	cookie := http.Cookie{Name: "lxgg_session", Value: tokenString}
+	cookie := http.Cookie{Path: "/", Name: "lxgg_session", Value: tokenString}
 	http.SetCookie(w, &cookie)
 
 	w.Write([]byte(`"Status":"Success"`))
