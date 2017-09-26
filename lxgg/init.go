@@ -79,7 +79,10 @@ func loadDB() *sqlx.DB {
 		}
 
 		buf := new(bytes.Buffer)
-		buf.ReadFrom(f)
+		_, err = buf.ReadFrom(f)
+		if err != nil {
+			log.Fatal("Couldn't read buffer: ", err)
+		}
 
 		schema := buf.String()
 		db.MustExec(schema)

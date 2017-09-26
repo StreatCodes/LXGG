@@ -18,7 +18,7 @@
                         :class="['container', 'panel', {selected: selected == container}]"
                         :key="container.id"
                         @click="selectContainer(container)">
-                        {{container.Name}}
+                        {{container.name}}
                     </div>
                 </div>
                 <div class="container-board":class="['panel', {active: selected !== null}]">
@@ -30,11 +30,13 @@
 </template>
 
 <script>
+import API from './lxgg-api.js';
+
 export default {
-    props: {
-    },
     created () {
         this.fetchContainers()
+    },
+    props: {
     },
     data: function(){
         return {
@@ -58,6 +60,7 @@ export default {
             .then((json) => {
                 this.containers = json;
                 this.loading = false;
+				console.log(this.containers);
             })
             .catch((err) => {
                 //TODO show fetch error

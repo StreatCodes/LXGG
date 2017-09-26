@@ -31,7 +31,13 @@ type loginRequest struct {
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	dec := json.NewDecoder(r.Body)
 	var loginReq loginRequest
-	dec.Decode(&loginReq)
+	err := dec.Decode(&loginReq)
+
+	if err != nil {
+		http.Error(w, "Error decoding body", http.StatusInternalServerError)
+		log.Println("Error decoding login requst body: ", err)
+		return
+	}
 
 	user, err := verifyLogin(w, loginReq.Username, loginReq.Password)
 	if err != nil {
@@ -58,8 +64,11 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{Path: "/", Name: "lxgg_session", Value: tokenString}
 	http.SetCookie(w, &cookie)
 
-	w.Write([]byte(`"Status":"Success"`))
-
+	_, err = w.Write([]byte(`"Status":"Success"`))
+	if err != nil {
+		log.Println("Error writing response: ", err)
+		return
+	}
 }
 
 func verifyLogin(w http.ResponseWriter, username, password string) (User, error) {
