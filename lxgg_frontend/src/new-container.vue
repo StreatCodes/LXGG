@@ -12,6 +12,10 @@
 						<label>Tags (Seperated by a comma)</label>
 						<input type="text" v-model="tags" placeholder="monitoring, amazing, state of the art">
 					</div>
+					<div class="new-row">
+						<label>Description</label>
+						<textarea v-model="description" placeholder="Staging server for Bernard Web"></textarea>
+					</div>
 					<!-- <div class="new-row">
 						<label>IPV4 Address</label>
 						<input type="text" v-model="ip" placeholder="192.168.10.69">
@@ -52,6 +56,7 @@ export default {
 		return {
 			name: "",
 			tags: "",
+			description: "",
 			ip: "",
 			image: "",
 

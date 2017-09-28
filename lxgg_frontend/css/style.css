@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'Questrial';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Questrial'), local('Questrial-Regular'), url(/fonts/Questrial-R.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+
 body {
     font-family: 'Questrial', sans-serif;
     padding: 0;
@@ -27,7 +36,8 @@ label {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+textarea {
     width: 100%;
     border: 1px solid #e4e4e4;
     padding: 12px;
@@ -38,13 +48,20 @@ input[type="password"] {
 }
 
 input::-webkit-input-placeholder,
-input::placeholder {
+textarea::-webkit-input-placeholder,
+input::placeholder,
+textarea::placeholder, {
     color: #bdbdbd;
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+textarea:focus {
     border-color: rgb(245, 124, 39);
+}
+
+textarea {
+    resize: vertical;
 }
 
 select {
@@ -136,6 +153,14 @@ div.grid {
 
 div.grid>.new-row {
     grid-column: 1;
+}
+
+div.grid>.width-2 {
+    grid-column-end: span 2;
+}
+
+div.grid>.width-3 {
+    grid-column-end: span 3;
 }
 
 
@@ -253,37 +278,29 @@ div.panel {
 /* CONTAINERS */
 
 .containers {
-    display: flex;
-}
-
-.containers>div {
-    flex: 50%;
-}
-
-.containers > .list {
     
 }
 
-.containers > .list > .container:hover{
+.containers .container:hover{
     background-color: #D5EDFF;
     cursor: pointer;
 }
 
-.containers > .list > .container.selected{
+.containers .container.selected{
     background-color: #3194e4;
     color: white;
-}
-
-.containers > .container-board {
-    
-}
-.containers > .container-board.active {
-    border: 1px solid #3194e4;
 }
 
 .empty-containers {
     text-align: center;
     margin-top: 60px;
+}
+
+/* CONTAINER DETAILS */
+.container-details {
+    border: 1px solid #3194e4;
+    padding: 20px;
+    background-color: white;
 }
 
 /* LOGIN */

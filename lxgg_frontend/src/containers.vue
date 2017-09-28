@@ -12,17 +12,16 @@
                 Loading.............
             </div>
             <div class="containers" v-else>
-                <div class="list">
-                    <div
-                        v-for="(container, index) in filteredContainers()"
-                        :class="['container', 'panel', {selected: selected == container}]"
-                        :key="container.id"
-                        @click="selectContainer(container)">
+                <div
+                    v-for="(container, index) in filteredContainers()"
+                    :key="container.id"
+                    @click="selectContainer(container)">
+                    <div :class="['container', 'panel', {selected: selected == container}]">
                         {{container.name}}
                     </div>
-                </div>
-                <div class="container-board":class="['panel', {active: selected !== null}]">
-
+                    <container-details
+                        v-if="container == selected" :data="container"></container-details>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,6 +30,7 @@
 
 <script>
 import API from './lxgg-api.js';
+import ContainerDetails from './container-details.vue';
 
 export default {
     created () {
@@ -74,6 +74,9 @@ export default {
             console.log("BOo")
             this.selected = container;
         }
+    },
+    components: {
+        'container-details': ContainerDetails
     }
 }
 </script>
