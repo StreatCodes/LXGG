@@ -78,6 +78,7 @@ func newContainerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// LXDCONN.SetContainerMetadata("test", api.ImageMetadata{Properties}) //TODO HERE
 	op, err := LXDCONN.CreateContainerFromImage(imgconn, *img, api.ContainersPost{Name: container.Name})
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error creating container: %s", err), http.StatusInternalServerError)
