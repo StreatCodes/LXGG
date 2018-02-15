@@ -37,9 +37,6 @@ const router = new VueRouter({ routes });
 const app = new Vue({
 	el: '#app',
 	router: router,
-	render: h => h(Main, {
-		// props: {
-		// 	greeting: "Hello"
-		// }
-	})
+	render: h => h(Main)
 });
+console.log('hello world!');
