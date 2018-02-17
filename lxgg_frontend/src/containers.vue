@@ -1,28 +1,27 @@
 <template>
     <main>
-        <div class="empty-containers" v-if="loading || containers == null">
-            <p>No containers found</p>
-            <router-link tag="button" to="/new">Create New Container</router-link>
+        <div v-if="loading" class="loading">
+            loading TODO spinner
         </div>
         <div v-else>
-            <div class="search-bar">
-                <input type="text" placeholder="Filter Containers">
+            <div v-if="containers.length < 1" class="empty-containers">
+                <p>No containers found</p>
+                <router-link tag="button" to="/new">Create New Container</router-link>
             </div>
-            <div class="loading-panel" v-if="loading">
-                Loading.............
-            </div>
-            <div class="containers" v-else>
-                <div
-                    v-for="(container, index) in filteredContainers()"
-                    :key="container.id"
-                    @click="selectContainer(container)">
-                    <div :class="['container', 'panel', {selected: selected == container}]">
-                        {{container.name}}
+            <div v-else class="split-view">
+                <div class="containers panel">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Filter Containers" v-model="filter">
                     </div>
-                    <container-details
-                        v-if="container == selected" :data="container"></container-details>
+                    <div
+                        v-for="container in filteredContainers()"
+                        :key="container.id"
+                        :class="['container-item', {selected: selected == container}]"
+                        @click="selectContainer(container)">
+                            {{container.name}}
                     </div>
                 </div>
+                <container-details :data="selected" />
             </div>
         </div>
     </main>
@@ -43,36 +42,57 @@ export default {
             loading: true,
             containers: [],
             selected: null,
+            filter: ""
         }
     },
     methods: {
         fetchContainers: function() {
-            fetch("/api/containers", {
-                credentials: "include",
-            })
+            fetch("/1.0/containers")
             .then((res) => {
                 if(res.status == 200){
                     return res.json();
                 } else {
-                    throw new Error(res.body);
+                    this.loading = false;
                 }
             })
             .then((json) => {
-                this.containers = json;
+                const reqs = [];
+                for(const url of json.metadata) {
+                    this.fetchContainerData(url); //TODO we can make this async
+                }
+
                 this.loading = false;
-				console.log(this.containers);
             })
-            .catch((err) => {
-                //TODO show fetch error
-                this.loading = false;
+        },
+        fetchContainerData: function(url) {
+            fetch(url)
+            .then((res) => {
+                if(res.status == 200){
+                    return res.json();
+                } else {
+                    this.loading = false;
+                }
+            }).then(container => {
+                this.containers.push(container.metadata);
             });
         },
         filteredContainers: function() {
-            return this.containers;
+            const containers = [];
+            //Loop through containers and only include containers with filter in name
+            for(let container of this.containers) {
+                const filter = this.filter.toLowerCase();
+
+                if (container.name.toLowerCase().indexOf(filter) !== -1 ||
+                    container.config['image.description'].toLowerCase().indexOf(filter) !== -1 ||
+                    container.status.toLowerCase().indexOf(filter) !== -1) {
+                    containers.push(container);
+                }
+            }
+
+            return containers;
         },
         selectContainer: function(container) {
-            console.log("BOo")
-            this.selected = container;
+            this.selected = this.selected === container ? null : container;
         }
     },
     components: {

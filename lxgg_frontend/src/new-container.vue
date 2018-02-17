@@ -69,17 +69,17 @@ export default {
 			e.preventDefault();
 			this.loading = true;
 
-			API.createContainer(this.name, this.image)
-			.then((json) => {
-				this.$router.push('/containers');
-			})
-			.catch((err) => {
-				//TODO show fetch error
-				this.loading = false;
-				console.log("Error start===========");
-				console.log(err);
-				console.log("Error end=============");
-			});
+			// API.createContainer(this.name, this.image)
+			// .then((json) => {
+			// 	this.$router.push('/containers');
+			// })
+			// .catch((err) => {
+			// 	//TODO show fetch error
+			// 	this.loading = false;
+			// 	console.log("Error start===========");
+			// 	console.log(err);
+			// 	console.log("Error end=============");
+			// });
 		}
 	}
 }

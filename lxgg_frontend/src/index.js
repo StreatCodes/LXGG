@@ -14,7 +14,8 @@ Vue.use(VueRouter);
 
 const checkLoggedIn = (to, from, next) => {
 	//redirect to login if no cookie found
-	if(document.cookie.indexOf('lxgg_session=') == -1) {
+	//TODO test expire time
+	if(!window.localStorage.getItem("key")) {
 		next('/login');
 	} else {
 		next();
@@ -32,11 +33,13 @@ const routes = [
 	{ path: '/user', name: 'user', component: User, beforeEnter: checkLoggedIn},
 ];
 
-const router = new VueRouter({ routes });
+const router = new VueRouter({ 
+	mode: 'history',
+	routes
+});
 
 const app = new Vue({
 	el: '#app',
 	router: router,
 	render: h => h(Main)
 });
-console.log('hello world!');

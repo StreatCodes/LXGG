@@ -1,14 +1,18 @@
 <template>
-    <div class="container-details">
-        <h3>Description</h3>
-        <p>{{data.description}}</p>
-        <h3>Config</h3>
-        <p><span class="bold">OS: </span>{{data.config['image.os']}}</p>
-        <p><span class="bold">Release: </span>{{data.config['image.release']}}</p>
-        <p><span class="bold">Architecture: </span>{{data.config['image.architecture']}}</p>
-        <h3>Devices</h3>
-        <p>TODO maybe..</p>
-
+    <div class="container-details panel" v-if="data">
+        <h2>{{data.name}}</h2>
+        <p>OS: <span>{{data.config['image.description']}}</span></p>
+        <p>State: <span>{{data.status}}</span></p>
+        <p>Created at: <span>{{new Date(data.created_at).toLocaleString()}}</span></p>
+        <p>Last used: <span>{{new Date(data.last_used_at).toLocaleString()}}</span></p>
+        <p>Profiles: <span>{{data.profiles.join(', ')}}</span></p>
+        <p>Description: <span>{{data.description}}</span></p>
+        <template v-for="(device, key) in data.expanded_devices">
+            <p :key="key">{{key}}:</p>
+            <template v-for="(value, field) in device">
+                <p :key="field" class="padded">{{field}}: <span>{{value}}</span></p>
+            </template>
+        </template>
     </div>
 </template>
 

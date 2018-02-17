@@ -11,47 +11,37 @@ export const getImages = () => {
 	})
 }
 
-export const getContainers = () => {
-	fetch("/api/containers", {
-		credentials: "include",
-	})
-	.then((res) => {
-		if(res.status == 200){
-			return res.json();
-		} else {
-			throw new Error(res.body);
-		}
-	})
-	.then((json) => {
-		this.containers = json;
-		this.loading = false;
-		console.log(this.containers);
-	})
-	.catch((err) => {
-		//TODO show fetch error
-		this.loading = false;
-	});
-}
 
 
-export const createContainer = (name, image) => {
-	const payload = {
-		Name: name,
-		Image: image
-	};
+		// const reqs = [];
 
-	return fetch("/api/containers/new",
-	{
-		method: "POST",
-		headers: {'Content-Type': 'application/json'},
-		credentials: 'include',
-		body: JSON.stringify(payload)
-	}).then((res) => {
-		console.log(res);
-		if(res.status == 200){
-			return null
-		}else {
-			throw new Error(res);
-		}
-	});
-}
+		// for(const image of images) {
+		// 	let request = fetch(image)
+		// 	.then(res => {
+		// 		return res.json();
+		// 	}).then(data => {
+		// 		return data.metadata;
+		// 	});
+
+		// 	reqs.push(request);
+		// }
+
+		// Promise.all(reqs).then(values => {
+		// 	this.images = values;
+		// });
+
+		// return fetch('/1.0/images')
+		// .then(res => {
+		// 	return res.json();
+		// }).then(data => {
+		// 	return data.metadata;
+		// })
+		
+		// const images = this.images.slice();
+		// return images.sort((a,b) => {
+		// 	if(a.properties.os > b.properties.os){
+		// 		return true
+		// 	} else {
+		// 		return !(b.properties.os > a.properties.os)
+		// 	}
+		// });

@@ -32,25 +32,26 @@ export default {
                 Password: this.password,
             };
 
-            fetch("/login",
+            fetch("/lxgg/login",
             {
                 method: "POST",
-                credentials: "include",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(payload)
             }).then((res) => {
                 if(res.status == 200){
-                    this.$router.push('/containers');
+                    return res.text();
                 }else {
                     //TODO show login error
                     this.loading = false;
                     console.log(res);
                 }
+            }).then(key => {
+                console.log("set key");
+                window.localStorage.setItem("key", key);
+                console.log("Redirect");
+                this.$router.push('/containers');
             });
         }
     }
 }
 </script>
-
-<style scoped>
-</style>

@@ -2,7 +2,7 @@
     font-family: 'Questrial';
     font-style: normal;
     font-weight: 400;
-    src: local('Questrial'), local('Questrial-Regular'), url(/fonts/Questrial-R.woff2) format('woff2');
+    src: local('Questrial'), local('Questrial-Regular'), url(/static/fonts/Questrial-R.woff2) format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
 
@@ -99,7 +99,7 @@ button:hover {
 }
 
 button.loading::before {
-    content: url(/icons/box.svg);
+    content: url(/static/icons/box.svg);
     animation: 2s infinite forwards spin;
     animation-timing-function: linear;
     display: block;
@@ -216,27 +216,27 @@ div.sidebar:hover>a {
 }
 
 div.sidebar>a.new::before {
-    content: url(/icons/plus-square.svg);
+    content: url(/static/icons/plus-square.svg);
 }
 
 div.sidebar>a.containers::before {
-    content: url(/icons/box.svg);
+    content: url(/static/icons/box.svg);
 }
 
 div.sidebar>a.images::before {
-    content: url(/icons/layers.svg);
+    content: url(/static/icons/layers.svg);
 }
 
 div.sidebar>a.networking::before {
-    content: url(/icons/activity.svg);
+    content: url(/static/icons/activity.svg);
 }
 
 div.sidebar>a.host::before {
-    content: url(/icons/server.svg);
+    content: url(/static/icons/server.svg);
 }
 
 div.sidebar>a.settings::before {
-    content: url(/icons/settings.svg);
+    content: url(/static/icons/settings.svg);
 }
 
 div.sidebar>a.user {
@@ -244,7 +244,7 @@ div.sidebar>a.user {
 }
 
 div.sidebar>a.user::before {
-    content: url(/icons/user.svg);
+    content: url(/static/icons/user.svg);
 }
 
 div.sidebar>a:hover {
@@ -277,16 +277,23 @@ div.panel {
 
 /* CONTAINERS */
 
-.containers {
-    
+.split-view {
+    display: flex;
 }
 
-.containers .container:hover{
+.containers {
+}
+
+.containers .container-item {
+    padding: 20px;
+}
+
+.containers .container-item:hover{
     background-color: #D5EDFF;
     cursor: pointer;
 }
 
-.containers .container.selected{
+.containers .container-item.selected{
     background-color: #3194e4;
     color: white;
 }
@@ -298,9 +305,23 @@ div.panel {
 
 /* CONTAINER DETAILS */
 .container-details {
-    border: 1px solid #3194e4;
     padding: 20px;
     background-color: white;
+    margin-left: 20px;
+    flex-grow: 1;
+}
+
+.container-details > p {
+    font-weight: bold;
+    margin: 0 0 8px;
+}
+
+.container-details > p > span {
+    font-weight: normal;
+}
+.container-details > p.padded {
+    padding-left: 60px;
+    font-weight: normal;
 }
 
 /* LOGIN */
@@ -310,6 +331,25 @@ div.login {
     margin: 200px auto;
 }
 
+/* TABLES */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead td {
+    background-color: #3194e4;
+    color: white;
+}
+
+td {
+    padding: 20px;
+}
+
+tbody tr {
+    border-bottom: solid 1px #dedede;
+}
 
 /* FOOTER */
 
