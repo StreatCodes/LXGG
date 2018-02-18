@@ -1,6 +1,7 @@
 <template>
     <main>
         <div class="panel">
+			<h2>Images</h2>
             <table>
                 <thead>
                     <tr>

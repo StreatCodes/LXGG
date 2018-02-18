@@ -10,6 +10,7 @@
             </div>
             <div v-else class="split-view">
                 <div class="containers panel">
+                    <h2>Containers</h2>
                     <div class="search-bar">
                         <input type="text" placeholder="Filter Containers" v-model="filter">
                     </div>

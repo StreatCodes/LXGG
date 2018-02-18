@@ -113,6 +113,7 @@ select {
     box-sizing: border-box;
     outline: none;
     background-color: inherit;
+    margin-bottom: 20px;
 }
 
 select:focus {
@@ -342,6 +343,10 @@ div.panel {
 .empty-containers {
     text-align: center;
     margin-top: 60px;
+}
+
+.search-bar > input {
+    margin-bottom: 0;
 }
 
 /* CONTAINER DETAILS */

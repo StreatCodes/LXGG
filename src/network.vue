@@ -1,6 +1,7 @@
 <template>
     <main>
         <div class="panel">
+			<h2>Networking</h2>
             <table>
                 <thead>
                     <tr>
@@ -10,7 +11,7 @@
                         <td>IPV4 Addr</td>
                         <td>IPV4 NAT</td>
                         <td>IPV6 Addr</td>
-                        <td>IPV4 NAT</td>
+                        <td>IPV6 NAT</td>
                         <td>Used By</td>
                     </tr>
                 </thead>

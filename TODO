@@ -1,1 +1,7 @@
+convert storage request nonsense to some kind of LXGG-api.js version
+	there should be a 'getList(name)' where name is the endpoint e.g. 'containers'
+	and subsecquently you should be able to pass that array to a different api function which returns an array container actual information
+container-details should have it's dedicated url e.g. /containers/amusing-gawker, that way we can link to it
 make used by column have links to their respective containers e.g. /containers/amusing-goshawk, and then do routing for that
+When creating a contianer subscribe to the async event and inform the user when it's complete use: /1.0/operations/<uuid>/wait
+improve netowrking layout, the table won't work when we have lots of containers

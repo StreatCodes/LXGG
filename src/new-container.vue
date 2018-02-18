@@ -1,54 +1,38 @@
 <template>
 	<main>
 		<div class="panel">
-			<h1>New Container</h1>
+			<h2>New Container</h2>
 			<form @submit.prevent="createContainer">
-				<div class="grid">
-					<div>
-						<label> <!-- TODO 64 chars max, ASCII, no slash, no colon and no comma -->
-							<p>Container Name</p>
-							<input type="text" name="name" v-model="name" placeholder="Bernard Web">
-						</label>
-					</div>
-					<div>
-						<label>
-							<p>Architecture</p>
-							<select name="arch" v-model="arch">
-								<option>x86_64</option>
-							</select>
-						</label>
-					</div>
-					<div class="new-row">
-						<label>
-							<p>Description</p>
-							<textarea v-model="description" name="description" placeholder="Staging server for Bernard Web"></textarea>
-						</label>
-					</div>
-					<div>
-						<label><p>Profiles</p></label>
-						<label class="cust-check">
-							<input type="checkbox" v-model="profiles" name="profiles" value="default">
-							<p>default</p>
-						</label>
-					</div>
-					<div class="new-row">
-						<label>
-							<p>Image</p>
-							<select v-model="image">
-								<option v-for="image in imageList" :key="image.fingerprint" :value="image.fingerprint">{{image.properties.description}}</option>
-							</select>
-						</label>
-					</div>
-					<div class="new-row">
-						<label class="cust-check">
-							<input type="checkbox" v-model="ephemeral" name="ephemeral" value="default">
-							<p>Destroy container on shutdown</p>
-						</label>
-					</div>
-					<div class="new-row">
-						<button :class="{loading: loading}" type="submit"><span>Deploy Container!</span></button>
-					</div>
-				</div>
+				<label> <!-- TODO 64 chars max, ASCII, no slash, no colon and no comma -->
+					<p>Container Name</p>
+					<input type="text" name="name" v-model="name" placeholder="Bernard Web">
+				</label>
+				<label>
+					<p>Architecture</p>
+					<select name="arch" v-model="arch">
+						<option>x86_64</option>
+					</select>
+				</label>
+				<label>
+					<p>Description</p>
+					<textarea v-model="description" name="description" placeholder="Staging server for Bernard Web"></textarea>
+				</label>
+				<label>
+					<p>Image</p>
+					<select v-model="image">
+						<option v-for="image in imageList" :key="image.fingerprint" :value="image.fingerprint">{{image.properties.description}}</option>
+					</select>
+				</label>
+				<label><p>Profiles</p></label>
+				<label class="cust-check">
+					<input type="checkbox" v-model="profiles" name="profiles" value="default">
+					<p>default</p>
+				</label>
+				<button :class="{loading: loading}" type="submit"><span>Deploy Container!</span></button>
+				<label class="cust-check" style="display: inline-block; margin-left: 20px;">
+					<input type="checkbox" v-model="ephemeral" name="ephemeral" value="default">
+					<p>Destroy container on shutdown</p>
+				</label>
 			</form>
 		</div>
 	</main>
