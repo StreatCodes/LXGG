@@ -3,3 +3,7 @@ start create container form
 image list as dropdown
 fill out form with a buncha fields
 submit request
+commit and push
+
+move lxgg front end to git repo root
+delete everything else

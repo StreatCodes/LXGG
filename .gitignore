@@ -1,6 +1,2 @@
-/lxgg/gin-bin*
-/lxgg/lxgg.exe
-/lxgg/lxgg
-/lxgg/settings.json
-/lxgg/lxgg.db
-/build
+node_modules/
+/dist
