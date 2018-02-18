@@ -2,32 +2,51 @@
 	<main>
 		<div class="panel">
 			<h1>New Container</h1>
-			<form @submit="createContainer">
+			<form @submit.prevent="createContainer">
 				<div class="grid">
 					<div>
-						<label>Container Name</label>
-						<input type="text" v-model="name" placeholder="Bernard Web">
+						<label> <!-- TODO 64 chars max, ASCII, no slash, no colon and no comma -->
+							<p>Container Name</p>
+							<input type="text" name="name" v-model="name" placeholder="Bernard Web">
+						</label>
 					</div>
 					<div>
-						<label>Tags (Seperated by a comma)</label>
-						<input type="text" v-model="tags" placeholder="monitoring, amazing, state of the art">
+						<label>
+							<p>Architecture</p>
+							<select name="arch" v-model="arch">
+								<option>x86_64</option>
+							</select>
+						</label>
 					</div>
 					<div class="new-row">
-						<label>Description</label>
-						<textarea v-model="description" placeholder="Staging server for Bernard Web"></textarea>
+						<label>
+							<p>Description</p>
+							<textarea v-model="description" name="description" placeholder="Staging server for Bernard Web"></textarea>
+						</label>
 					</div>
-					<!-- <div class="new-row">
-						<label>IPV4 Address</label>
-						<input type="text" v-model="ip" placeholder="192.168.10.69">
-					</div> -->
-					<div class="new-row">
-						<label>Image</label>
-						<select v-model="image">
-							<option v-for="image in imageList" :key="image.fingerprint" :value="image.fingerprint">{{image.properties.description}}</option>
-						</select>
+					<div>
+						<label><p>Profiles</p></label>
+						<label class="cust-check">
+							<input type="checkbox" v-model="profiles" name="profiles" value="default">
+							<p>default</p>
+						</label>
 					</div>
 					<div class="new-row">
-						<button :class="{loading: loading}" @click="createContainer"><span>Deploy Container!</span></button>
+						<label>
+							<p>Image</p>
+							<select v-model="image">
+								<option v-for="image in imageList" :key="image.fingerprint" :value="image.fingerprint">{{image.properties.description}}</option>
+							</select>
+						</label>
+					</div>
+					<div class="new-row">
+						<label class="cust-check">
+							<input type="checkbox" v-model="ephemeral" name="ephemeral" value="default">
+							<p>Destroy container on shutdown</p>
+						</label>
+					</div>
+					<div class="new-row">
+						<button :class="{loading: loading}" type="submit"><span>Deploy Container!</span></button>
 					</div>
 				</div>
 			</form>
@@ -36,13 +55,23 @@
 </template>
 
 <script>
-import * as API from './lxgg-api.js';
+//TODO
+// "config": {"limits.cpu": "2"},                                      # Config override.
+// "devices": {                                                        # optional list of devices the container should have
+//     "kvm": {
+//         "path": "/dev/kvm",
+//         "type": "unix-char"
+//     },
+// },
+// "instance_type": "c2.micro",                                        # An optional instance type to use as basis for limits
+
+import * as API from './lxgg-api';
 
 export default {
 	created: function() {
 		API.getImages()
-		.then((json) => {
-			this.imageList = json;
+		.then((images) => {
+			this.imageList = images;
 			console.log(this.imageList);
 		})
 		.catch((err) => {
@@ -55,10 +84,12 @@ export default {
 	data: function(){
 		return {
 			name: "",
-			tags: "",
+			arch: "x86_64",
 			description: "",
+			profiles: ['default'],
 			ip: "",
 			image: "",
+			ephemeral: false,
 
 			imageList: [],
 			loading: false
@@ -66,24 +97,30 @@ export default {
 	},
 	methods: {
 		createContainer: function(e) {
-			e.preventDefault();
 			this.loading = true;
 
-			// API.createContainer(this.name, this.image)
-			// .then((json) => {
-			// 	this.$router.push('/containers');
-			// })
-			// .catch((err) => {
-			// 	//TODO show fetch error
-			// 	this.loading = false;
-			// 	console.log("Error start===========");
-			// 	console.log(err);
-			// 	console.log("Error end=============");
-			// });
+			const payload = {
+				name: this.name,
+				architecture: this.arch,
+				profiles: this.profiles,
+				description: this.description,
+				ephemeral: this.ephemeral,
+				source: {
+					type: "image",
+					fingerprint: this.image
+				}
+			};
+
+			return fetch('/1.0/containers', {
+				method: "POST",
+				body: JSON.stringify(payload)
+			}).then(res => {
+				return res.json();
+			}).then(data => {
+				console.log(data);
+				// this.$router.push('/containers');
+			});
 		}
 	}
 }
 </script>
-
-<style scoped>
-</style>

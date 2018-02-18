@@ -92,7 +92,7 @@ export default {
             return containers;
         },
         selectContainer: function(container) {
-            this.selected = this.selected === container ? null : container;
+            this.selected = container;
         }
     },
     components: {
@@ -100,6 +100,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-</style>

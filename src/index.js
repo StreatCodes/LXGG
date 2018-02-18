@@ -7,7 +7,7 @@ import Container from './containers.vue';
 import Images from './images.vue';
 import Network from './network.vue';
 import Host from './host.vue';
-import Settings from './settings.vue';
+import Storage from './storage.vue';
 import User from './user.vue';
 
 Vue.use(VueRouter);
@@ -29,7 +29,7 @@ const routes = [
 	{ path: '/images', name: 'images', component: Images, beforeEnter: checkLoggedIn},
 	{ path: '/networking', name: 'networking', component: Network, beforeEnter: checkLoggedIn},
 	{ path: '/host', name: 'host', component: Host, beforeEnter: checkLoggedIn},
-	{ path: '/settings', name: 'settings', component: Settings, beforeEnter: checkLoggedIn},
+	{ path: '/storage', name: 'storage', component: Storage, beforeEnter: checkLoggedIn},
 	{ path: '/user', name: 'user', component: User, beforeEnter: checkLoggedIn},
 ];
 

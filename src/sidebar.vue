@@ -5,7 +5,7 @@
         <router-link :class="['images', {active: $route.name == 'images'}]" to="/images"><span>Images</span></router-link>
         <router-link :class="['networking', {active: $route.name == 'networking'}]" to="/networking"><span>Networking</span></router-link>
         <router-link :class="['host', {active: $route.name == 'host'}]" to="/host"><span>Host</span></router-link>
-        <router-link :class="['settings', {active: $route.name == 'settings'}]" to="/settings"><span>Settings</span></router-link>
+        <router-link :class="['storage', {active: $route.name == 'storage'}]" to="/storage"><span>Storage</span></router-link>
         <router-link :class="['user', {active: $route.name == 'user'}]" to="/user"><span>User</span></router-link>
     </div>
 </template>
@@ -16,6 +16,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-</style>

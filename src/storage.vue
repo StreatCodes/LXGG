@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="panel">
-            Settings
+            Storage
         </div>
     </main>
 </template>
@@ -12,6 +12,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-</style>
